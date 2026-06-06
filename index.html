@@ -1,0 +1,66 @@
+```html
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Odtwarzacz Wideo</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#0f172a;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    text-align:center;
+}
+
+h1{
+    margin-bottom:20px;
+    font-size:2rem;
+}
+
+.video-box{
+    background:#1e293b;
+    padding:20px;
+    border-radius:20px;
+    box-shadow:0 0 30px rgba(0,0,0,.4);
+}
+
+video{
+    width:100%;
+    border-radius:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Oglądaj Film</h1>
+
+    <div class="video-box">
+        <video controls>
+            <source src="film.mp4" type="video/mp4">
+            Twoja przeglądarka nie obsługuje odtwarzania wideo.
+        </video>
+    </div>
+</div>
+
+</body>
+</html>
+```
