@@ -1,66 +1,2325 @@
-```html
+
+
 <!DOCTYPE html>
+
 <html lang="pl">
+
 <head>
+
 <meta charset="UTF-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Odtwarzacz Wideo</title>
- 
+
+<meta name="theme-color" content="#111210">
+
+<title>since. — Your moments, your time.</title>
+
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+
+  --bg:#111210;
+
+  --panel:#191a17;
+
+  --panel2:#20211d;
+
+  --border:#2b2c27;
+
+  --text:#eeeee8;
+
+  --muted:#898b80;
+
+  --accent:#c5b99a;
+
+  --accent-bg:#343126;
+
+  --green:#a7b99c;
+
+  --red:#d58c82;
+
+  --shadow:0 12px 35px #00000018;
+
 }
 
-body{
-    background:#0f172a;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:white;
+body.light {
+
+  --bg:#f4f3ef;
+
+  --panel:#ffffff;
+
+  --panel2:#f2f1ec;
+
+  --border:#e5e3dc;
+
+  --text:#25251f;
+
+  --muted:#858579;
+
+  --accent:#827354;
+
+  --accent-bg:#eeebdf;
+
+  --green:#63815e;
+
+  --red:#b76559;
+
+  --shadow:0 12px 35px #00000009;
+
 }
 
-.container{
-    width:90%;
-    max-width:1200px;
-    text-align:center;
+* {box-sizing:border-box;margin:0;padding:0}
+
+body {
+
+  background:var(--bg);
+
+  color:var(--text);
+
+  font-family:'DM Sans',sans-serif;
+
+  font-size:14px;
+
+  min-height:100vh;
+
+  transition:background .2s,color .2s;
+
 }
 
-h1{
-    margin-bottom:20px;
-    font-size:2rem;
+button,input,select,textarea {font:inherit}
+
+button {cursor:pointer}
+
+button:focus-visible,input:focus-visible,select:focus-visible {
+
+  outline:2px solid var(--accent);
+
+  outline-offset:3px;
+
 }
 
-.video-box{
-    background:#1e293b;
-    padding:20px;
-    border-radius:20px;
-    box-shadow:0 0 30px rgba(0,0,0,.4);
+.app {min-height:100vh;display:flex}
+
+/* SIDEBAR */
+
+.sidebar {
+
+  width:245px;
+
+  border-right:1px solid var(--border);
+
+  padding:29px 19px;
+
+  display:flex;
+
+  flex-direction:column;
+
+  position:fixed;
+
+  inset:0 auto 0 0;
+
+  background:var(--bg);
+
+  z-index:5;
+
 }
 
-video{
-    width:100%;
-    border-radius:12px;
+.logo {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:11px;
+
+  padding:0 9px;
+
+  margin-bottom:54px;
+
 }
+
+.logo-mark {
+
+  width:33px;height:33px;
+
+  border:1px solid var(--accent);
+
+  color:var(--accent);
+
+  display:grid;place-items:center;
+
+  border-radius:10px;
+
+  font-family:'Manrope';
+
+  font-size:20px;
+
+}
+
+.logo-name {
+
+  font-family:'Manrope';
+
+  font-size:22px;
+
+  font-weight:800;
+
+  letter-spacing:-1.3px;
+
+}
+
+.logo-name span {color:var(--accent)}
+
+.nav-label {
+
+  color:var(--muted);
+
+  font-size:10px;
+
+  letter-spacing:1.5px;
+
+  text-transform:uppercase;
+
+  padding:0 10px;
+
+  margin-bottom:12px;
+
+}
+
+.nav {display:grid;gap:5px}
+
+.nav-btn {
+
+  display:flex;align-items:center;gap:12px;
+
+  padding:12px 11px;
+
+  border:0;background:transparent;
+
+  color:var(--muted);
+
+  border-radius:8px;
+
+  text-align:left;
+
+  font-size:13px;
+
+  transition:.2s;
+
+}
+
+.nav-btn:hover {background:var(--panel);color:var(--text)}
+
+.nav-btn.active {background:var(--accent-bg);color:var(--text)}
+
+.nav-icon {width:19px;text-align:center;font-size:16px}
+
+.nav-count {
+
+  margin-left:auto;
+
+  font-size:11px;
+
+  color:var(--muted);
+
+}
+
+.sidebar-bottom {margin-top:auto}
+
+.profile {
+
+  border-top:1px solid var(--border);
+
+  padding:19px 7px 0;
+
+  display:flex;align-items:center;gap:11px;
+
+}
+
+.avatar {
+
+  width:35px;height:35px;
+
+  background:var(--accent-bg);
+
+  color:var(--accent);
+
+  display:grid;place-items:center;
+
+  border-radius:50%;
+
+  font-family:'Manrope';font-weight:700;
+
+}
+
+.profile-name {font-size:12px;font-weight:600}
+
+.profile-sub {font-size:11px;color:var(--muted);margin-top:3px}
+
+/* MAIN */
+
+.main {
+
+  margin-left:245px;
+
+  width:calc(100% - 245px);
+
+  padding:35px 5%;
+
+  max-width:1600px;
+
+}
+
+.topbar {
+
+  display:flex;align-items:center;justify-content:space-between;
+
+  margin-bottom:48px;
+
+}
+
+.breadcrumb {font-size:12px;color:var(--muted)}
+
+.breadcrumb span {color:var(--text)}
+
+.top-actions {display:flex;gap:10px;align-items:center}
+
+.icon-btn {
+
+  width:38px;height:38px;
+
+  border:1px solid var(--border);
+
+  border-radius:9px;
+
+  color:var(--text);
+
+  background:var(--panel);
+
+  display:grid;place-items:center;
+
+  font-size:16px;
+
+}
+
+.icon-btn:hover {border-color:var(--accent)}
+
+.primary-btn {
+
+  background:var(--accent);
+
+  color:#171711;
+
+  border:0;
+
+  border-radius:8px;
+
+  padding:11px 17px;
+
+  font-size:12px;
+
+  font-weight:700;
+
+  transition:.2s;
+
+}
+
+.primary-btn:hover {filter:brightness(1.1);transform:translateY(-1px)}
+
+.page {display:none}
+
+.page.active {display:block}
+
+.heading {
+
+  display:flex;justify-content:space-between;
+
+  align-items:end;gap:20px;
+
+  margin-bottom:32px;
+
+}
+
+.eyebrow {
+
+  color:var(--accent);
+
+  font-size:10px;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  margin-bottom:12px;
+
+}
+
+h1 {
+
+  font-family:'Manrope',sans-serif;
+
+  font-size:clamp(28px,4vw,38px);
+
+  letter-spacing:-1.7px;
+
+  font-weight:600;
+
+}
+
+.heading-desc {color:var(--muted);margin-top:9px;font-size:13px}
+
+/* STATISTICS */
+
+.stats {
+
+  display:grid;
+
+  grid-template-columns:repeat(4,1fr);
+
+  gap:14px;
+
+  margin-bottom:37px;
+
+}
+
+.stat-card {
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  border-radius:11px;
+
+  padding:20px;
+
+  box-shadow:var(--shadow);
+
+}
+
+.stat-top {
+
+  display:flex;justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:20px;
+
+}
+
+.stat-label {font-size:11px;color:var(--muted)}
+
+.stat-icon {color:var(--accent);font-size:17px}
+
+.stat-number {
+
+  font-family:'Manrope';
+
+  font-size:29px;
+
+  font-weight:600;
+
+  letter-spacing:-1px;
+
+}
+
+.stat-desc {color:var(--muted);font-size:10px;margin-top:5px}
+
+/* SECTION */
+
+.section-head {
+
+  display:flex;justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:17px;
+
+}
+
+.section-title {
+
+  font-family:'Manrope';
+
+  font-size:16px;
+
+  font-weight:600;
+
+}
+
+.text-link {
+
+  background:none;border:0;color:var(--accent);
+
+  font-size:11px;
+
+}
+
+.events-grid {
+
+  display:grid;
+
+  grid-template-columns:repeat(2,minmax(0,1fr));
+
+  gap:13px;
+
+}
+
+.event-card {
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  border-radius:11px;
+
+  padding:19px;
+
+  transition:.2s;
+
+  position:relative;
+
+  min-width:0;
+
+}
+
+.event-card:hover {
+
+  border-color:var(--accent);
+
+  transform:translateY(-2px);
+
+}
+
+.event-top {
+
+  display:flex;justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:22px;
+
+}
+
+.event-category {
+
+  display:flex;align-items:center;gap:7px;
+
+  font-size:10px;color:var(--muted);
+
+}
+
+.category-dot {width:7px;height:7px;border-radius:50%}
+
+.event-menu {
+
+  border:0;background:none;color:var(--muted);
+
+  font-size:18px;padding:0 4px;
+
+}
+
+.event-title {
+
+  font-family:'Manrope';
+
+  font-size:16px;
+
+  font-weight:600;
+
+  margin-bottom:9px;
+
+  overflow-wrap:anywhere;
+
+}
+
+.event-duration {
+
+  font-family:'Manrope';
+
+  color:var(--accent);
+
+  font-size:19px;
+
+  line-height:1.5;
+
+  font-weight:600;
+
+  letter-spacing:-.5px;
+
+  overflow-wrap:anywhere;
+
+}
+
+.event-date {
+
+  color:var(--muted);
+
+  font-size:11px;
+
+  margin-top:8px;
+
+}
+
+.event-bottom {
+
+  display:flex;justify-content:space-between;
+
+  align-items:center;
+
+  border-top:1px solid var(--border);
+
+  margin-top:17px;
+
+  padding-top:13px;
+
+}
+
+.event-status {font-size:10px;color:var(--green)}
+
+.event-status.future {color:var(--accent)}
+
+.event-extra {font-size:10px;color:var(--muted)}
+
+.event-note {
+
+  font-size:11px;color:var(--muted);
+
+  margin-top:12px;line-height:1.6;
+
+}
+
+.empty {
+
+  border:1px dashed var(--border);
+
+  border-radius:11px;
+
+  padding:45px 20px;
+
+  text-align:center;
+
+  grid-column:1/-1;
+
+}
+
+.empty-icon {font-size:28px;color:var(--accent);margin-bottom:14px}
+
+.empty h3 {font-family:'Manrope';font-size:16px;margin-bottom:7px}
+
+.empty p {font-size:12px;color:var(--muted);margin-bottom:19px}
+
+/* ADD FORM */
+
+.form-card {
+
+  max-width:680px;
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  padding:28px;
+
+}
+
+.form-grid {
+
+  display:grid;grid-template-columns:1fr 1fr;gap:17px;
+
+}
+
+.field {margin-bottom:19px}
+
+.field.full {grid-column:1/-1}
+
+.field label {
+
+  display:block;color:var(--muted);
+
+  font-size:11px;margin-bottom:9px;
+
+}
+
+.field input,.field select,.field textarea {
+
+  width:100%;
+
+  padding:12px 13px;
+
+  background:var(--panel2);
+
+  border:1px solid var(--border);
+
+  border-radius:8px;
+
+  color:var(--text);
+
+  outline:none;
+
+  font-size:13px;
+
+}
+
+.field input:focus,.field select:focus,.field textarea:focus {
+
+  border-color:var(--accent);
+
+}
+
+.field input[type="date"],.field input[type="time"] {color-scheme:dark}
+
+body.light .field input[type="date"],body.light .field input[type="time"] {color-scheme:light}
+
+.field textarea {resize:vertical;min-height:85px}
+
+.color-options {display:flex;gap:10px;flex-wrap:wrap}
+
+.color-choice {
+
+  width:25px;height:25px;border-radius:50%;
+
+  border:2px solid transparent;
+
+  outline:1px solid transparent;
+
+  cursor:pointer;
+
+}
+
+.color-choice.selected {outline-color:var(--text);outline-offset:3px}
+
+.form-actions {display:flex;gap:10px;margin-top:7px}
+
+.secondary-btn {
+
+  padding:11px 16px;
+
+  background:var(--panel2);
+
+  border:1px solid var(--border);
+
+  border-radius:8px;
+
+  color:var(--text);
+
+  font-size:12px;
+
+}
+
+.form-error {color:var(--red);font-size:12px;margin-top:12px}
+
+/* FILTERS */
+
+.filters {
+
+  display:flex;gap:8px;flex-wrap:wrap;
+
+  margin-bottom:20px;
+
+}
+
+.filter-btn {
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  border-radius:7px;
+
+  color:var(--muted);
+
+  padding:8px 13px;
+
+  font-size:11px;
+
+}
+
+.filter-btn.active {background:var(--accent-bg);color:var(--text);border-color:var(--accent)}
+
+.search {
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  color:var(--text);
+
+  padding:9px 12px;
+
+  border-radius:8px;
+
+  outline:none;
+
+  font-size:12px;
+
+  width:220px;
+
+}
+
+/* MILESTONES */
+
+.milestone-list {display:grid;gap:10px}
+
+.milestone {
+
+  display:flex;align-items:center;gap:15px;
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  padding:17px;
+
+  border-radius:10px;
+
+}
+
+.milestone-icon {
+
+  width:39px;height:39px;
+
+  display:grid;place-items:center;
+
+  border-radius:9px;
+
+  background:var(--accent-bg);
+
+  color:var(--accent);
+
+  font-size:17px;
+
+}
+
+.milestone-info {flex:1;min-width:0}
+
+.milestone-name {font-weight:600;font-size:12px}
+
+.milestone-desc {font-size:10px;color:var(--muted);margin-top:4px}
+
+.milestone-time {text-align:right;color:var(--accent);font-size:12px;font-weight:600}
+
+/* DETAILS */
+
+.detail-card {
+
+  background:var(--panel);
+
+  border:1px solid var(--border);
+
+  border-radius:12px;
+
+  padding:30px;
+
+  margin-bottom:15px;
+
+}
+
+.detail-main {
+
+  font-family:'Manrope';
+
+  font-size:clamp(27px,5vw,42px);
+
+  color:var(--accent);
+
+  letter-spacing:-1px;
+
+  line-height:1.35;
+
+  margin:20px 0;
+
+}
+
+.detail-grid {
+
+  display:grid;grid-template-columns:repeat(2,1fr);
+
+  gap:12px;margin-top:20px;
+
+}
+
+.detail-stat {
+
+  background:var(--panel2);
+
+  padding:17px;border-radius:8px;
+
+}
+
+.detail-stat strong {display:block;font-family:'Manrope';font-size:23px}
+
+.detail-stat span {font-size:10px;color:var(--muted)}
+
+/* FOOTER */
+
+.footer {
+
+  border-top:1px solid var(--border);
+
+  margin-top:55px;
+
+  padding-top:18px;
+
+  display:flex;justify-content:space-between;
+
+  color:var(--muted);font-size:10px;
+
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1050px) {
+
+  .stats {grid-template-columns:repeat(2,1fr)}
+
+}
+
+@media(max-width:750px) {
+
+  .sidebar {
+
+    position:fixed;inset:auto 0 0 0;
+
+    width:100%;height:66px;
+
+    border-right:0;border-top:1px solid var(--border);
+
+    padding:5px 9px;
+
+    flex-direction:row;justify-content:space-around;
+
+    background:var(--panel);
+
+  }
+
+  .logo,.nav-label,.sidebar-bottom {display:none}
+
+  .nav {width:100%;display:flex;justify-content:space-around;gap:0}
+
+  .nav-btn {flex:1;flex-direction:column;gap:3px;padding:6px 2px;font-size:9px;text-align:center}
+
+  .nav-icon {font-size:17px}
+
+  .nav-count {display:none}
+
+  .main {margin:0;width:100%;padding:23px 18px 100px}
+
+  .topbar {margin-bottom:32px}
+
+  .heading {align-items:start;flex-direction:column;margin-bottom:24px}
+
+  .stats {gap:9px}
+
+  .stat-card {padding:14px}
+
+  .stat-number {font-size:24px}
+
+  .events-grid {grid-template-columns:1fr}
+
+  .form-card {padding:20px}
+
+  .footer {margin-top:35px}
+
+}
+
+@media(max-width:390px) {
+
+  .form-grid {grid-template-columns:1fr}
+
+  .field.full {grid-column:auto}
+
+  .stats {grid-template-columns:1fr 1fr}
+
+}
+
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
-    <h1>Oglądaj Film</h1>
+<div class="app">
 
-    <div class="video-box">
-        <video controls>
-            <source src="film.mp4" type="video/mp4">
-            Twoja przeglądarka nie obsługuje odtwarzania wideo.
-        </video>
+<aside class="sidebar">
+
+  <div class="logo">
+
+    <div class="logo-mark">s.</div>
+
+    <div class="logo-name">since<span>.</span></div>
+
+  </div>
+
+  <div class="nav-label">Workspace</div>
+
+  <nav class="nav">
+
+    <button class="nav-btn active" data-page="dashboard">
+
+      <span class="nav-icon">⌂</span> Przegląd
+
+    </button>
+
+    <button class="nav-btn" data-page="events">
+
+      <span class="nav-icon">◷</span> Wydarzenia
+
+      <span class="nav-count" id="navCount">0</span>
+
+    </button>
+
+    <button class="nav-btn" data-page="milestones">
+
+      <span class="nav-icon">✳</span> Rocznice
+
+    </button>
+
+    <button class="nav-btn" data-page="add">
+
+      <span class="nav-icon">＋</span> Dodaj nowe
+
+    </button>
+
+  </nav>
+
+  <div class="sidebar-bottom">
+
+    <div class="profile">
+
+      <div class="avatar">S</div>
+
+      <div>
+
+        <div class="profile-name">Personal space</div>
+
+        <div class="profile-sub">Your moments matter.</div>
+
+      </div>
+
     </div>
+
+  </div>
+
+</aside>
+
+<main class="main">
+
+  <header class="topbar">
+
+    <div class="breadcrumb">since. / <span id="breadcrumb">Przegląd</span></div>
+
+    <div class="top-actions">
+
+      <button class="icon-btn" id="themeBtn" title="Zmień motyw">☼</button>
+
+      <button class="primary-btn" onclick="showPage('add')">＋ Nowe wydarzenie</button>
+
+    </div>
+
+  </header>
+
+  <!-- DASHBOARD -->
+
+  <section class="page active" id="dashboard">
+
+    <div class="heading">
+
+      <div>
+
+        <div class="eyebrow">YOUR PERSONAL TIMELINE</div>
+
+        <h1>Witaj w since.</h1>
+
+        <p class="heading-desc">Wszystkie ważne momenty w jednym miejscu.</p>
+
+      </div>
+
+    </div>
+
+    <div class="stats">
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span class="stat-label">Wszystkie wydarzenia</span>
+
+          <span class="stat-icon">◷</span>
+
+        </div>
+
+        <div class="stat-number" id="statAll">0</div>
+
+        <div class="stat-desc">Zapisane momenty</div>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span class="stat-label">Trwające</span>
+
+          <span class="stat-icon">↗</span>
+
+        </div>
+
+        <div class="stat-number" id="statPast">0</div>
+
+        <div class="stat-desc">Wydarzenia z przeszłości</div>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span class="stat-label">Nadchodzące</span>
+
+          <span class="stat-icon">⌁</span>
+
+        </div>
+
+        <div class="stat-number" id="statFuture">0</div>
+
+        <div class="stat-desc">Odliczania do przyszłości</div>
+
+      </div>
+
+      <div class="stat-card">
+
+        <div class="stat-top">
+
+          <span class="stat-label">Najdłuższy staż</span>
+
+          <span class="stat-icon">✳</span>
+
+        </div>
+
+        <div class="stat-number" id="statLongest">—</div>
+
+        <div class="stat-desc">Najstarszy licznik</div>
+
+      </div>
+
+    </div>
+
+    <div class="section-head">
+
+      <div class="section-title">Twoje wydarzenia</div>
+
+      <button class="text-link" onclick="showPage('events')">Zobacz wszystkie →</button>
+
+    </div>
+
+    <div class="events-grid" id="dashboardEvents"></div>
+
+    <div class="footer">
+
+      <span>since. © 2026</span>
+
+      <span>Time is everything.</span>
+
+    </div>
+
+  </section>
+
+  <!-- EVENTS -->
+
+  <section class="page" id="events">
+
+    <div class="heading">
+
+      <div>
+
+        <div class="eyebrow">YOUR COLLECTION</div>
+
+        <h1>Wydarzenia</h1>
+
+        <p class="heading-desc">Wszystkie Twoje zapisane momenty.</p>
+
+      </div>
+
+    </div>
+
+    <div class="filters">
+
+      <button class="filter-btn active" data-filter="all">Wszystkie</button>
+
+      <button class="filter-btn" data-filter="past">Przeszłość</button>
+
+      <button class="filter-btn" data-filter="future">Przyszłość</button>
+
+      <select class="filter-btn" id="categoryFilter">
+
+        <option value="all">Wszystkie kategorie</option>
+
+        <option value="life">Życie</option>
+
+        <option value="people">Znajomości</option>
+
+        <option value="travel">Podróże</option>
+
+        <option value="school">Szkoła</option>
+
+        <option value="other">Inne</option>
+
+      </select>
+
+      <input class="search" id="search" placeholder="⌕  Szukaj wydarzenia...">
+
+    </div>
+
+    <div class="events-grid" id="allEvents"></div>
+
+  </section>
+
+  <!-- MILESTONES -->
+
+  <section class="page" id="milestones">
+
+    <div class="heading">
+
+      <div>
+
+        <div class="eyebrow">SPECIAL MOMENTS</div>
+
+        <h1>Kamienie milowe</h1>
+
+        <p class="heading-desc">Ważne rocznice i nadchodzące jubileusze.</p>
+
+      </div>
+
+    </div>
+
+    <div class="section-title" style="margin-bottom:17px">Najbliższe okazje</div>
+
+    <div class="milestone-list" id="milestoneList"></div>
+
+  </section>
+
+  <!-- ADD / EDIT -->
+
+  <section class="page" id="add">
+
+    <div class="heading">
+
+      <div>
+
+        <div class="eyebrow">CREATE A MOMENT</div>
+
+        <h1 id="formHeading">Nowe wydarzenie</h1>
+
+        <p class="heading-desc">Każdy ważny moment zasługuje na swoje miejsce.</p>
+
+      </div>
+
+    </div>
+
+    <div class="form-card">
+
+      <form id="eventForm">
+
+        <input type="hidden" id="editId">
+
+        <div class="form-grid">
+
+          <div class="field full">
+
+            <label for="eventName">Nazwa wydarzenia *</label>
+
+            <input id="eventName" maxlength="70" required
+
+              placeholder="Np. Początek naszej znajomości">
+
+          </div>
+
+          <div class="field">
+
+            <label for="eventDate">Data *</label>
+
+            <input id="eventDate" type="date" required>
+
+          </div>
+
+          <div class="field">
+
+            <label for="eventTime">Godzina</label>
+
+            <input id="eventTime" type="time" value="00:00" required>
+
+          </div>
+
+          <div class="field full">
+
+            <label for="eventCategory">Kategoria</label>
+
+            <select id="eventCategory">
+
+              <option value="life">Życie</option>
+
+              <option value="people">Znajomości</option>
+
+              <option value="travel">Podróże</option>
+
+              <option value="school">Szkoła</option>
+
+              <option value="other">Inne</option>
+
+            </select>
+
+          </div>
+
+          <div class="field full">
+
+            <label>Kolor wydarzenia</label>
+
+            <div class="color-options" id="colorOptions">
+
+              <button type="button" class="color-choice selected" data-color="#c5b99a" style="background:#c5b99a"></button>
+
+              <button type="button" class="color-choice" data-color="#9aafc9" style="background:#9aafc9"></button>
+
+              <button type="button" class="color-choice" data-color="#b79ac9" style="background:#b79ac9"></button>
+
+              <button type="button" class="color-choice" data-color="#a7b99c" style="background:#a7b99c"></button>
+
+              <button type="button" class="color-choice" data-color="#d69b8e" style="background:#d69b8e"></button>
+
+              <button type="button" class="color-choice" data-color="#d7c17f" style="background:#d7c17f"></button>
+
+            </div>
+
+          </div>
+
+          <div class="field full">
+
+            <label for="eventNote">Opis / notatka (opcjonalnie)</label>
+
+            <textarea id="eventNote" maxlength="500"
+
+              placeholder="Dodaj coś, co warto zapamiętać..."></textarea>
+
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+
+          <button class="primary-btn" type="submit" id="saveBtn">Zapisz wydarzenie →</button>
+
+          <button class="secondary-btn" type="button" onclick="resetForm();showPage('dashboard')">Anuluj</button>
+
+        </div>
+
+        <div class="form-error" id="formError"></div>
+
+      </form>
+
+    </div>
+
+  </section>
+
+  <!-- DETAILS -->
+
+  <section class="page" id="details">
+
+    <button class="text-link" onclick="showPage('events')" style="margin-bottom:25px">← Wróć do wydarzeń</button>
+
+    <div id="detailContent"></div>
+
+  </section>
+
+</main>
+
 </div>
 
+<script>
+
+const STORAGE_KEY = 'since_events_v1';
+
+const categories = {
+
+  life: {name:'Życie',color:'#c5b99a'},
+
+  people: {name:'Znajomości',color:'#b79ac9'},
+
+  travel: {name:'Podróże',color:'#9aafc9'},
+
+  school: {name:'Szkoła',color:'#a7b99c'},
+
+  other: {name:'Inne',color:'#d69b8e'}
+
+};
+
+let events = loadEvents();
+
+let selectedColor = '#c5b99a';
+
+let currentFilter = 'all';
+
+function loadEvents() {
+
+  try {
+
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+    return Array.isArray(saved) ? saved : [];
+
+  } catch {
+
+    return [];
+
+  }
+
+}
+
+function saveEvents() {
+
+  try {
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(events));
+
+  } catch {
+
+    alert('Nie udało się zapisać danych w przeglądarce.');
+
+  }
+
+}
+
+function escapeHTML(value) {
+
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+
+    '&':'&amp;', '<':'&lt;', '>':'&gt;',
+
+    '"':'&quot;', "'":'&#39;'
+
+  })[char]);
+
+}
+
+function dateOf(event) {
+
+  return new Date(event.date + 'T' + event.time);
+
+}
+
+function plural(n, one, few, many) {
+
+  if (n === 1) return one;
+
+  if (n % 10 >= 2 && n % 10 <= 4 &&
+
+      !(n % 100 >= 12 && n % 100 <= 14)) return few;
+
+  return many;
+
+}
+
+// Kalendarzowe dodawanie miesięcy z obsługą końca miesiąca
+
+function addMonths(date, count) {
+
+  const d = new Date(date);
+
+  const day = d.getDate();
+
+  d.setDate(1);
+
+  d.setMonth(d.getMonth() + count);
+
+  const last = new Date(
+
+    d.getFullYear(), d.getMonth()+1, 0
+
+  ).getDate();
+
+  d.setDate(Math.min(day,last));
+
+  return d;
+
+}
+
+// Dokładny podział na lata, miesiące, dni i czas
+
+function getParts(start, end) {
+
+  let cursor = new Date(start);
+
+  let years = 0, months = 0, days = 0;
+
+  while (addMonths(cursor,12) <= end) {
+
+    cursor = addMonths(cursor,12);
+
+    years++;
+
+  }
+
+  while (addMonths(cursor,1) <= end) {
+
+    cursor = addMonths(cursor,1);
+
+    months++;
+
+  }
+
+  while (true) {
+
+    const next = new Date(cursor);
+
+    next.setDate(next.getDate()+1);
+
+    if (next > end) break;
+
+    cursor = next;
+
+    days++;
+
+  }
+
+  let seconds = Math.floor((end-cursor)/1000);
+
+  const hours = Math.floor(seconds/3600);
+
+  seconds %= 3600;
+
+  const minutes = Math.floor(seconds/60);
+
+  seconds %= 60;
+
+  return {years,months,days,hours,minutes,seconds};
+
+}
+
+function describe(parts, compact=false) {
+
+  const p = [];
+
+  const units = [
+
+    [parts.years, ['rok','lata','lat']],
+
+    [parts.months, ['miesiąc','miesiące','miesięcy']],
+
+    [parts.days, ['dzień','dni','dni']],
+
+    [parts.hours, ['godzinę','godziny','godzin']],
+
+    [parts.minutes, ['minutę','minuty','minut']],
+
+    [parts.seconds, ['sekundę','sekundy','sekund']]
+
+  ];
+
+  units.forEach(([n,names]) => {
+
+    if (n > 0) p.push(n+' '+plural(n,...names));
+
+  });
+
+  if (p.length === 0) return '0 sekund';
+
+  return p.slice(0,compact ? 3 : 6).join(', ');
+
+}
+
+function formatDate(date) {
+
+  return date.toLocaleDateString('pl-PL',{
+
+    day:'numeric',month:'long',year:'numeric'
+
+  });
+
+}
+
+function getDuration(event) {
+
+  const now = new Date();
+
+  const target = dateOf(event);
+
+  const future = target > now;
+
+  const parts = future
+
+    ? getParts(now,target)
+
+    : getParts(target,now);
+
+  return {
+
+    future,
+
+    parts,
+
+    text: describe(parts,true),
+
+    total: Math.floor(Math.abs(now-target)/1000)
+
+  };
+
+}
+
+function totalDays(event) {
+
+  return Math.floor(
+
+    Math.abs(new Date()-dateOf(event))/86400000
+
+  );
+
+}
+
+function renderCard(event) {
+
+  const duration = getDuration(event);
+
+  const cat = categories[event.category] || categories.other;
+
+  const color = event.color || cat.color;
+
+  return `
+
+    <article class="event-card" onclick="showDetails('${event.id}')">
+
+      <div class="event-top">
+
+        <div class="event-category">
+
+          <span class="category-dot" style="background:${color}"></span>
+
+          ${escapeHTML(cat.name)}
+
+        </div>
+
+        <button class="event-menu" title="Edytuj"
+
+          onclick="event.stopPropagation();editEvent('${event.id}')">···</button>
+
+      </div>
+
+      <div class="event-title">${escapeHTML(event.name)}</div>
+
+      <div class="event-duration">${duration.future ? 'Za ' : ''}${duration.text}</div>
+
+      <div class="event-date">${formatDate(dateOf(event))}</div>
+
+      ${event.note ? `<div class="event-note">${escapeHTML(event.note)}</div>` : ''}
+
+      <div class="event-bottom">
+
+        <span class="event-status ${duration.future?'future':''}">
+
+          ${duration.future ? '↗ Nadchodzi' : '● Trwa'}
+
+        </span>
+
+        <span class="event-extra">${duration.future ? 'Do wydarzenia' : totalDays(event).toLocaleString('pl-PL')+' dni'}</span>
+
+      </div>
+
+    </article>`;
+
+}
+
+function renderDashboard() {
+
+  const now = new Date();
+
+  const past = events.filter(e => dateOf(e) <= now);
+
+  const future = events.filter(e => dateOf(e) > now);
+
+  $('statAll').textContent = events.length;
+
+  $('statPast').textContent = past.length;
+
+  $('statFuture').textContent = future.length;
+
+  const oldest = past.sort((a,b)=>dateOf(a)-dateOf(b))[0];
+
+  $('statLongest').textContent = oldest
+
+    ? totalDays(oldest).toLocaleString('pl-PL')+' d'
+
+    : '—';
+
+  $('navCount').textContent = events.length;
+
+  const sorted = [...events].sort((a,b) => {
+
+    const af = dateOf(a)>now;
+
+    const bf = dateOf(b)>now;
+
+    if (af !== bf) return af ? 1 : -1;
+
+    return af ? dateOf(a)-dateOf(b) : dateOf(b)-dateOf(a);
+
+  });
+
+  $('dashboardEvents').innerHTML = sorted.length
+
+    ? sorted.slice(0,6).map(renderCard).join('')
+
+    : emptyHTML('Nie masz jeszcze wydarzeń','Dodaj pierwszy moment, który chcesz zapamiętać.');
+
+}
+
+function emptyHTML(title,description) {
+
+  return `<div class="empty">
+
+    <div class="empty-icon">◷</div>
+
+    <h3>${title}</h3>
+
+    <p>${description}</p>
+
+    <button class="primary-btn" onclick="showPage('add')">＋ Dodaj wydarzenie</button>
+
+  </div>`;
+
+}
+
+function renderEvents() {
+
+  const query = $('search').value.toLowerCase().trim();
+
+  const category = $('categoryFilter').value;
+
+  const now = new Date();
+
+  const filtered = events.filter(e => {
+
+    const future = dateOf(e)>now;
+
+    const matchesType = currentFilter==='all' ||
+
+      (currentFilter==='future' ? future : !future);
+
+    const matchesCategory = category==='all' || e.category===category;
+
+    const matchesQuery = (e.name+' '+(e.note||'')).toLowerCase().includes(query);
+
+    return matchesType && matchesCategory && matchesQuery;
+
+  }).sort((a,b)=>dateOf(b)-dateOf(a));
+
+  $('allEvents').innerHTML = filtered.length
+
+    ? filtered.map(renderCard).join('')
+
+    : emptyHTML('Brak wyników','Spróbuj zmienić filtry lub dodaj nowe wydarzenie.');
+
+}
+
+function renderMilestones() {
+
+  const thresholds = [
+
+    {days:30,label:'30 dni',icon:'◷'},
+
+    {days:100,label:'100 dni',icon:'✳'},
+
+    {days:180,label:'Pół roku',icon:'◇'},
+
+    {days:365,label:'Rok',icon:'★'},
+
+    {days:730,label:'2 lata',icon:'✦'},
+
+    {days:1095,label:'3 lata',icon:'✧'},
+
+    {days:1825,label:'5 lat',icon:'✳'},
+
+    {days:3650,label:'10 lat',icon:'★'}
+
+  ];
+
+  const items = [];
+
+  events.forEach(e => {
+
+    const start = dateOf(e);
+
+    if (start > new Date()) return;
+
+    thresholds.forEach(t => {
+
+      const milestoneDate = new Date(start);
+
+      milestoneDate.setDate(milestoneDate.getDate()+t.days);
+
+      if (milestoneDate > new Date()) {
+
+        items.push({
+
+          event:e,
+
+          threshold:t,
+
+          date:milestoneDate
+
+        });
+
+      }
+
+    });
+
+  });
+
+  items.sort((a,b)=>a.date-b.date);
+
+  $('milestoneList').innerHTML = items.length
+
+    ? items.slice(0,30).map(item => `
+
+      <div class="milestone">
+
+        <div class="milestone-icon">${item.threshold.icon}</div>
+
+        <div class="milestone-info">
+
+          <div class="milestone-name">${escapeHTML(item.event.name)} — ${item.threshold.label}</div>
+
+          <div class="milestone-desc">${formatDate(item.date)}</div>
+
+        </div>
+
+        <div class="milestone-time">${Math.ceil((item.date-new Date())/86400000)===0
+
+          ? 'Dzisiaj'
+
+          : 'Za '+Math.ceil((item.date-new Date())/86400000)+' dni'}</div>
+
+      </div>`).join('')
+
+    : emptyHTML('Brak nadchodzących rocznic','Dodaj wydarzenia z przeszłości, aby śledzić ich jubileusze.');
+
+}
+
+function refresh() {
+
+  renderDashboard();
+
+  if ($('events').classList.contains('active')) renderEvents();
+
+  if ($('milestones').classList.contains('active')) renderMilestones();
+
+  if ($('details').classList.contains('active') && window.currentDetail) {
+
+    showDetails(window.currentDetail);
+
+  }
+
+}
+
+function showPage(page) {
+
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+
+  $(page).classList.add('active');
+
+  document.querySelectorAll('.nav-btn').forEach(b=>{
+
+    b.classList.toggle('active',b.dataset.page===page);
+
+  });
+
+  const names = {
+
+    dashboard:'Przegląd',
+
+    events:'Wydarzenia',
+
+    milestones:'Rocznice',
+
+    add:'Nowe wydarzenie',
+
+    details:'Szczegóły'
+
+  };
+
+  $('breadcrumb').textContent=names[page]||page;
+
+  if(page==='events') renderEvents();
+
+  if(page==='milestones') renderMilestones();
+
+  window.scrollTo({top:0,behavior:'smooth'});
+
+}
+
+document.querySelectorAll('.nav-btn').forEach(btn=>{
+
+  btn.addEventListener('click',()=>showPage(btn.dataset.page));
+
+});
+
+// COLOR PICKER
+
+$('colorOptions').addEventListener('click',e=>{
+
+  const btn=e.target.closest('.color-choice');
+
+  if(!btn)return;
+
+  selectedColor=btn.dataset.color;
+
+  document.querySelectorAll('.color-choice').forEach(b=>
+
+    b.classList.toggle('selected',b===btn)
+
+  );
+
+});
+
+// FORM
+
+function resetForm() {
+
+  $('eventForm').reset();
+
+  $('editId').value='';
+
+  $('formHeading').textContent='Nowe wydarzenie';
+
+  $('saveBtn').textContent='Zapisz wydarzenie →';
+
+  $('formError').textContent='';
+
+  selectedColor='#c5b99a';
+
+  document.querySelectorAll('.color-choice').forEach(b=>
+
+    b.classList.toggle('selected',b.dataset.color===selectedColor)
+
+  );
+
+  $('eventTime').value='00:00';
+
+}
+
+$('eventForm').addEventListener('submit',e=>{
+
+  e.preventDefault();
+
+  const name=$('eventName').value.trim();
+
+  const date=$('eventDate').value;
+
+  const time=$('eventTime').value;
+
+  if(!name || !date || !time) return;
+
+  const selected=new Date(date+'T'+time);
+
+  if(isNaN(selected.getTime())) {
+
+    $('formError').textContent='Podaj prawidłową datę.';
+
+    return;
+
+  }
+
+  if(selected > new Date()) {
+
+    // Przyszłość jest dozwolona
+
+  }
+
+  const id=$('editId').value;
+
+  const existing=events.find(e=>e.id===id);
+
+  const item={
+
+    id:id || (crypto.randomUUID ? crypto.randomUUID() : Date.now().toString()),
+
+    name,
+
+    date,
+
+    time,
+
+    category:$('eventCategory').value,
+
+    color:selectedColor,
+
+    note:$('eventNote').value.trim()
+
+  };
+
+  if(existing) {
+
+    events=events.map(e=>e.id===id ? item : e);
+
+  } else {
+
+    events.push(item);
+
+  }
+
+  saveEvents();
+
+  resetForm();
+
+  refresh();
+
+  showPage('events');
+
+});
+
+function editEvent(id) {
+
+  const e=events.find(x=>x.id===id);
+
+  if(!e)return;
+
+  $('editId').value=e.id;
+
+  $('eventName').value=e.name;
+
+  $('eventDate').value=e.date;
+
+  $('eventTime').value=e.time;
+
+  $('eventCategory').value=e.category;
+
+  $('eventNote').value=e.note||'';
+
+  selectedColor=e.color||categories[e.category].color;
+
+  document.querySelectorAll('.color-choice').forEach(b=>
+
+    b.classList.toggle('selected',b.dataset.color===selectedColor)
+
+  );
+
+  $('formHeading').textContent='Edytuj wydarzenie';
+
+  $('saveBtn').textContent='Zapisz zmiany →';
+
+  showPage('add');
+
+}
+
+function deleteEvent(id) {
+
+  const e=events.find(x=>x.id===id);
+
+  if(!e)return;
+
+  if(!confirm('Czy na pewno chcesz usunąć wydarzenie "'+e.name+'"?'))return;
+
+  events=events.filter(x=>x.id!==id);
+
+  saveEvents();
+
+  window.currentDetail=null;
+
+  refresh();
+
+  showPage('events');
+
+}
+
+function showDetails(id) {
+
+  const e=events.find(x=>x.id===id);
+
+  if(!e)return;
+
+  window.currentDetail=id;
+
+  const d=getDuration(e);
+
+  const cat=categories[e.category]||categories.other;
+
+  const now=new Date();
+
+  const fullParts = d.parts;
+
+  const totalSeconds = d.total;
+
+  $('detailContent').innerHTML=`
+
+    <div class="eyebrow">${escapeHTML(cat.name)}</div>
+
+    <h1>${escapeHTML(e.name)}</h1>
+
+    <p class="heading-desc">${formatDate(dateOf(e))}</p>
+
+    <div class="detail-card" style="margin-top:25px">
+
+      <div class="eyebrow">${d.future?'POZOSTAŁO':'MINĘŁO'}</div>
+
+      <div class="detail-main">${d.future?'Za ':''}${describe(fullParts)}</div>
+
+      <p style="color:var(--muted);font-size:12px">
+
+        ${d.future?'Do tego wydarzenia':'Od tego momentu'}
+
+      </p>
+
+      <div class="detail-grid">
+
+        <div class="detail-stat">
+
+          <strong>${Math.floor(totalSeconds/86400).toLocaleString('pl-PL')}</strong>
+
+          <span>Łącznie dni</span>
+
+        </div>
+
+        <div class="detail-stat">
+
+          <strong>${Math.floor(totalSeconds/3600).toLocaleString('pl-PL')}</strong>
+
+          <span>Łącznie godzin</span>
+
+        </div>
+
+        <div class="detail-stat">
+
+          <strong>${Math.floor(totalSeconds/60).toLocaleString('pl-PL')}</strong>
+
+          <span>Łącznie minut</span>
+
+        </div>
+
+        <div class="detail-stat">
+
+          <strong>${totalSeconds.toLocaleString('pl-PL')}</strong>
+
+          <span>Łącznie sekund</span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    ${e.note?`
+
+    <div class="detail-card">
+
+      <div class="section-title" style="margin-bottom:12px">Notatka</div>
+
+      <p style="color:var(--muted);line-height:1.8">${escapeHTML(e.note)}</p>
+
+    </div>`:''}
+
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+
+      <button class="primary-btn" onclick="editEvent('${e.id}')">Edytuj wydarzenie</button>
+
+      <button class="secondary-btn" onclick="copyEvent('${e.id}')">Kopiuj wynik</button>
+
+      <button class="secondary-btn" style="color:var(--red)" onclick="deleteEvent('${e.id}')">Usuń</button>
+
+    </div>
+
+  `;
+
+  showPage('details');
+
+}
+
+function copyEvent(id) {
+
+  const e=events.find(x=>x.id===id);
+
+  if(!e)return;
+
+  const d=getDuration(e);
+
+  const text=e.name+'\n'+(d.future?'Pozostało: ':'Minęło: ')+d.text+
+
+    '\nData: '+formatDate(dateOf(e));
+
+  navigator.clipboard.writeText(text).then(()=>{
+
+    alert('Wynik skopiowany!');
+
+  }).catch(()=>{
+
+    prompt('Skopiuj wynik:',text);
+
+  });
+
+}
+
+// FILTERS
+
+document.querySelectorAll('[data-filter]').forEach(btn=>{
+
+  btn.addEventListener('click',()=>{
+
+    currentFilter=btn.dataset.filter;
+
+    document.querySelectorAll('[data-filter]').forEach(b=>
+
+      b.classList.toggle('active',b===btn)
+
+    );
+
+    renderEvents();
+
+  });
+
+});
+
+$('search').addEventListener('input',renderEvents);
+
+$('categoryFilter').addEventListener('change',renderEvents);
+
+// THEME
+
+if(localStorage.getItem('since_theme')==='light') {
+
+  document.body.classList.add('light');
+
+}
+
+$('themeBtn').textContent=document.body.classList.contains('light')?'☾':'☼';
+
+$('themeBtn').addEventListener('click',()=>{
+
+  document.body.classList.toggle('light');
+
+  const light=document.body.classList.contains('light');
+
+  $('themeBtn').textContent=light?'☾':'☼';
+
+  localStorage.setItem('since_theme',light?'light':'dark');
+
+});
+
+// BACKUP EXPORT / IMPORT
+
+function exportData() {
+
+  const data=JSON.stringify(events,null,2);
+
+  const blob=new Blob([data],{type:'application/json'});
+
+  const url=URL.createObjectURL(blob);
+
+  const a=document.createElement('a');
+
+  a.href=url;
+
+  a.download='since-backup.json';
+
+  a.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+function importData(file) {
+
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+
+    try {
+
+      const data=JSON.parse(reader.result);
+
+      if(!Array.isArray(data)) throw new Error();
+
+      const valid=data.every(e=>
+
+        e && typeof e.name==='string' &&
+
+        typeof e.date==='string' &&
+
+        typeof e.time==='string' &&
+
+        typeof e.id==='string'
+
+      );
+
+      if(!valid) throw new Error();
+
+      if(!confirm('Import zastąpi obecne wydarzenia. Kontynuować?'))return;
+
+      events=data;
+
+      saveEvents();
+
+      refresh();
+
+      alert('Dane zostały zaimportowane.');
+
+    } catch {
+
+      alert('Nieprawidłowy plik kopii zapasowej.');
+
+    }
+
+  };
+
+  reader.readAsText(file);
+
+}
+
+// BACKUP BUTTONS
+
+$('themeBtn').insertAdjacentHTML('afterend',
+
+  '<button class="icon-btn" id="backupBtn" title="Kopia zapasowa">↓</button>'
+
+);
+
+$('backupBtn').addEventListener('click',()=>{
+
+  const choice=prompt('Wpisz EXPORT, aby pobrać kopię, lub IMPORT, aby wczytać kopię:');
+
+  if(!choice)return;
+
+  if(choice.toUpperCase()==='EXPORT') exportData();
+
+  if(choice.toUpperCase()==='IMPORT') {
+
+    const input=document.createElement('input');
+
+    input.type='file';
+
+    input.accept='.json,application/json';
+
+    input.onchange=()=> {
+
+      if(input.files[0])importData(input.files[0]);
+
+    };
+
+    input.click();
+
+  }
+
+});
+
+// INITIALIZE
+
+refresh();
+
+// Odświeżanie liczników
+
+setInterval(refresh,1000);
+
+</script>
+
 </body>
+
 </html>
-```
